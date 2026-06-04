@@ -83,7 +83,7 @@ public final class MusicManager {
         stopRussiaMusicLoop();
         russiaMusicLoopTimeline = new Timeline(
             new KeyFrame(Duration.seconds(RUSSIA_MUSIC_DURATION), e -> {
-                if (mediaPlayer != null && isPlaying && "Russia Music".equals(currentTrack)) {
+                if (mediaPlayer != null && isPlaying && "Russia Music".equals(currentTrack) && SettingsManager.isMusicEnabled()) {
                     mediaPlayer.stop();
                     mediaPlayer.seek(Duration.ZERO);
                     mediaPlayer.play();
@@ -105,6 +105,10 @@ public final class MusicManager {
     }
     
     public static void play() {
+        if (!SettingsManager.isMusicEnabled()) {
+            return;
+        }
+        
         if (mediaPlayer != null) {
             if (!isPlaying) {
                 mediaPlayer.play();
